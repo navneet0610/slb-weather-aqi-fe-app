@@ -1,0 +1,67 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+  <h1>Enter City Name</h1>
+  <form (submit)="getWeatherAndAqi()" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <mat-form-field appearance="fill" fxFlex="60%">
+      <mat-label>City Name</mat-label>
+      <input matInput type="text" id="cityName" [(ngModel)]="cityName" name="cityName" required>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" fxFlex="20%">Go</button>
+  </form>
+
+  <div *ngIf="error" class="error" fxLayout="row" fxLayoutAlign="center center">
+    {{ error }}
+  </div>
+
+  <div *ngIf="weatherData" class="weather-container" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="start stretch">
+    <h2>Weather and AQI for {{ weatherData.city }}</h2>
+
+    <div class="weather-details" fxLayout="column" fxLayoutGap="10px">
+      <h3>Weather Details</h3>
+      <p>Temperature: {{ weatherData.weather.main.temp }}°C</p>
+      <p>Feels Like: {{ weatherData.weather.main.feels_like }} °C</p>
+      <p>Min Temperature: {{ weatherData.weather.main.temp_min }} °C</p>
+      <p>Max Temperature: {{ weatherData.weather.main.temp_max }} °C</p>
+      <p>Weather Description: {{ weatherData.weather.weather[0].description }}</p>
+      <p>Humidity: {{ weatherData.weather.main.humidity }}%</p>
+      <p>Wind Speed: {{ weatherData.weather.wind.speed }} m/s</p>
+      <p>Pressure: {{ weatherData.weather.main.pressure }} Pa</p>
+      <p>Sea Level: {{ weatherData.weather.main.sea_level }} m</p>
+
+      <ngx-charts-bar-vertical
+        [results]="weatherChartData"
+        [view]="[700, 400]"
+        [scheme]="colorScheme"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="true"
+        [showDataLabel]="true">
+      </ngx-charts-bar-vertical>
+    </div>
+
+    <div class="aqi-details" fxLayout="column" fxLayoutGap="10px">
+      <h3>Air Quality Index</h3>
+      <p>AQI: {{ weatherData.air_quality.list[0].main.aqi }}</p>
+      <p>AQI Qualitative: {{ weatherData.aqi_qualitative }}</p>
+
+      <ngx-charts-bar-vertical
+        [results]="pollutantChartData"
+        [view]="[700, 400]"
+        [scheme]="colorScheme"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="true"
+        [showDataLabel]="true"
+        [customColors]="customColors">
+      </ngx-charts-bar-vertical>
+
+      <div class="pollutant-details">
+        <h4>Pollutant Concentrations</h4>
+        <ul>
+          <li *ngFor="let pollutant of pollutantChartData">
+            {{ pollutant.name }}: {{ pollutant.value }} µg/m³ - {{ pollutant.category }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

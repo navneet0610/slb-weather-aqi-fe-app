@@ -1,0 +1,67 @@
+.input-group {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+.pollutants {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pollutants p {
+  margin-right: 20px;
+}
+
+@media (max-width: 768px) {
+  .input-group {
+    flex-direction: column;
+  }
+
+  .input-group .btn {
+    margin-top: 10px;
+  }
+}
+.container {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.error {
+  color: red;
+}
+
+.weather-container {
+  margin-top: 20px;
+}
+
+.weather-details, .aqi-details {
+  margin-bottom: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .weather-details, .aqi-details {
+    margin-bottom: 10px;
+  }
+
+  ngx-charts-bar-vertical {
+    width: 100% !important;
+    height: 300px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  ngx-charts-bar-vertical {
+    width: 100% !important;
+    height: 250px !important;
+  }
+}
